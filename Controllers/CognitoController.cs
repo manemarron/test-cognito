@@ -33,5 +33,15 @@ namespace test_cognito.Controllers
             this.logger.LogInformation("Successful cognito request");
             return new OkObjectResult(result);
         }
+
+        // POST api/cognito/signin
+        [HttpPost("signin")]
+        public async Task<ActionResult<InitiateAuthResponse>> Signin([FromBody] AdminInitiateAuthRequest request)
+        {
+            request.AuthFlow = AuthFlowType.ADMIN_NO_SRP_AUTH;
+            var result = await this.client.AdminInitiateAuthAsync(request).ConfigureAwait(false);
+            this.logger.LogInformation("Successful cognito request");
+            return new OkObjectResult(result);
+        }
     }
 }
