@@ -29,8 +29,7 @@ namespace test_cognito
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var options = Configuration.GetAWSOptions();
-            services.AddDefaultAWSOptions(options);
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
             services.AddAWSService<IAmazonCognitoIdentityProvider>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

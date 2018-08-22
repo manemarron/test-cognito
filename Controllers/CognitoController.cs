@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Amazon.Runtime;
 using Amazon.CognitoIdentityProvider;
 using Amazon.CognitoIdentityProvider.Model;
 using test_cognito;
@@ -29,7 +30,10 @@ namespace test_cognito.Controllers
         [HttpPost("signup")]
         public async Task<ActionResult<SignUpResponse>> Signup([FromBody] SignUpRequest request)
         {
-            var result = await this.client.SignUpAsync(request).ConfigureAwait(false);
+            var signupClient = new AmazonCognitoIdentityProviderClient(
+                new AnonymousAWSCredentials()
+            );
+            var result = await signupClient.SignUpAsync(request).ConfigureAwait(false);
             this.logger.LogInformation("Successful cognito request");
             return new OkObjectResult(result);
         }
